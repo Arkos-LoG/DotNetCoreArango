@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCoreArango", "DotNetCoreArango\DotNetCoreArango.csproj", "{6B189EFA-3D23-4CA8-A95D-C61780986A2C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BorderEast.ArangoDB.Client", "BorderEast.ArangoDB.Client\BorderEast.ArangoDB.Client.csproj", "{D2AC9E05-63F8-42DE-B348-D09E95B7B4E3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BorderEast.ASPNetCore.Identity.ArangoDB", "BorderEast.ASPNetCore.Identity.ArangoDB\BorderEast.ASPNetCore.Identity.ArangoDB.csproj", "{E8460045-D4DF-4939-9A08-662208CCF788}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B189EFA-3D23-4CA8-A95D-C61780986A2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B189EFA-3D23-4CA8-A95D-C61780986A2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B189EFA-3D23-4CA8-A95D-C61780986A2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B189EFA-3D23-4CA8-A95D-C61780986A2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2AC9E05-63F8-42DE-B348-D09E95B7B4E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2AC9E05-63F8-42DE-B348-D09E95B7B4E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2AC9E05-63F8-42DE-B348-D09E95B7B4E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2AC9E05-63F8-42DE-B348-D09E95B7B4E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8460045-D4DF-4939-9A08-662208CCF788}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8460045-D4DF-4939-9A08-662208CCF788}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8460045-D4DF-4939-9A08-662208CCF788}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8460045-D4DF-4939-9A08-662208CCF788}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D4D5621F-2EE9-4FA9-AA7A-D44A290A3402}
+	EndGlobalSection
+EndGlobal
