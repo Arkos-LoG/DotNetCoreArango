@@ -1,16 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using BorderEast.ArangoDB.Client;
+using BorderEast.ASPNetCore.Identity.ArangoDB;
+using DotNetCoreArango.Data;
+using DotNetCoreArango.Models;
+using DotNetCoreArango.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using DotNetCoreArango.Services;
-using BorderEast.ArangoDB.Client;
-using System;
-using DotNetCoreArango.Models;
-using BorderEast.ASPNetCore.Identity.ArangoDB;
-using DotNetCoreArango.Data;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace DotNetCoreArango
 {
@@ -52,6 +53,7 @@ namespace DotNetCoreArango
                 IsDebug = true
             });
 
+            services.AddSingleton(Configuration);
             services.AddSingleton<IArangoClient>(ArangoClient.Client()); // AddSingleton shared with everyone who needs it for lifetime of the application
             services.AddScoped<IContactStore, ArangoContactStore>(); // AddScoped adds it within the scope of a single request
             services.AddAutoMapper(); // for doing mappings/custom mappings (resolvers) between Entities and models
@@ -98,6 +100,23 @@ namespace DotNetCoreArango
             });
 
             app.UseIdentity();
+
+            // use middleware for JWTs  add nuget -> Microsoft.AspNetCore.Authentication.JwtBearer
+            app.UseJwtBearerAuthentication(new JwtBearerOptions  
+            {
+                AutomaticAuthenticate = true, // if finds a token assume that you want it to authenticate
+                AutomaticChallenge = true, // see for more info https://dzimchuk.net/protecting-your-apis-with-azure-active-directory/
+
+                // This is the information that you want the bearer authentication piece to use to validate the parameters.
+                TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = Configuration["Tokens:Issuer"],
+                    ValidAudience = Configuration["Tokens:Audience"],
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:key"])),
+                    ValidateLifetime = true // makes sure expiration date isn't expired 
+                }
+            });
 
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
 

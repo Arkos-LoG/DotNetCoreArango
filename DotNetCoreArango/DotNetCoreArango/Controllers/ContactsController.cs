@@ -1,18 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using DotNetCoreArango.Data;
 using DotNetCoreArango.Data.Entities;
 using DotNetCoreArango.Filters;
 using DotNetCoreArango.Models;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DotNetCoreArango.Controllers
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/[controller]")] 
     [ValidateModel]
@@ -22,7 +22,8 @@ namespace DotNetCoreArango.Controllers
         private readonly ILogger<ContactsController> _logger;
         private readonly IMapper _mapper;
 
-        public ContactsController(IContactStore contactStore, 
+        public ContactsController(
+            IContactStore contactStore, 
             ILogger<ContactsController> logger,
             IMapper mapper)
         {
@@ -38,6 +39,15 @@ namespace DotNetCoreArango.Controllers
             _logger.LogInformation("get all contacts");
 
             var contacts = await _contactStore.GetAllAsync<Contact>();
+
+            return Ok(_mapper.Map<IEnumerable<ContactModel>>(contacts));
+        }
+
+        // GET: api/Contacts/{filter}?value={valueOfFilter}
+        [HttpGet("{filter}")]
+        public async Task<IActionResult> Get(string filter, string value)
+        {
+            var contacts = await _contactStore.GetAllFilteredByAsync<Contact>(filter, value);
 
             return Ok(_mapper.Map<IEnumerable<ContactModel>>(contacts));
         }
@@ -81,18 +91,6 @@ namespace DotNetCoreArango.Controllers
             }
 
             return BadRequest();
-        }
-
-        // PUT: api/Contacts/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-        
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

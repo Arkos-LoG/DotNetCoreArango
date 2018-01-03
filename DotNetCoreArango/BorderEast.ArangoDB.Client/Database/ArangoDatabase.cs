@@ -222,6 +222,18 @@ namespace BorderEast.ArangoDB.Client.Database
             return await Query<T>(string.Format("FOR x IN {0} RETURN x", typeName)).ToListAsync();
             //new Dictionary<string, object>{{ "col", typeName }}).ToListAsync();
         }
+
+        /// <summary>
+        /// Get all entities of given type filtered by given filter
+        /// </summary>
+        /// <typeparam name="T">Entity type</typeparam>
+        /// <returns>List of entities</returns>
+        public async Task<List<T>> GetAllFilteredByAsync<T>(string filter, string value)
+        {
+            var typeName = DynamicUtil.GetTypeName(typeof(T));
+
+            return await Query<T>($"FOR x IN {typeName} FILTER x.{filter} == \"{value}\" RETURN x").ToListAsync();
+        }
         #endregion
 
         #region utility

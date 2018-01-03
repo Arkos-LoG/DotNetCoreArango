@@ -10,5 +10,6 @@ namespace DotNetCoreArango.Data
     {
         Task<UpdatedDocument<T>> InsertAsync<T>(T entity);
         Task<IEnumerable<T>> GetAllAsync<T>();
+        Task<IEnumerable<T>> GetAllFilteredByAsync<T>(string filter, string value);
     }
 }

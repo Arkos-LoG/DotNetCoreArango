@@ -22,6 +22,12 @@ namespace DotNetCoreArango.Data
             return result;
         }
 
+        public async Task<IEnumerable<T>> GetAllFilteredByAsync<T>(string filter, string value)
+        {
+            var result = await client.DB().GetAllFilteredByAsync<T>(filter, value);
+            return result;
+        }
+
         public async Task<UpdatedDocument<T>> InsertAsync<T>(T entity)
         {
             var result = await client.DB().InsertAsync<T>(entity);
